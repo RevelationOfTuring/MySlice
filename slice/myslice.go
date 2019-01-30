@@ -72,3 +72,20 @@ func (s*Myslice)UpdateData(index,value int)(error){
 	*(*int)(unsafe.Pointer(p))=value
 	return nil
 }
+
+//删除元素
+func (s*Myslice)DeleteData(index int)(error){
+	if s==nil {
+		return errors.New("Myslice is empty")
+	}
+	if index<0||index>=s.len{
+		return errors.New("Error:Index out of range")
+	}
+	p:=uintptr(s.Data)+uintptr(index*TAG)
+	for i:=index;i<s.len-1;i++{
+		*(*int)(unsafe.Pointer(p))=*(*int)(unsafe.Pointer(p+TAG))
+		p+=TAG
+	}
+	s.len--
+	return nil
+}

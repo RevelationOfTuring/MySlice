@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dataStructure/slice/slice"
+	"dataStructure/MySlice/slice"
 	"fmt"
 )
 
@@ -16,9 +16,15 @@ func main() {
 	//	return
 	//}
 	//fmt.Println(ret)
-	if err:=s.UpdateData(5,100);err!=nil {
+	//if err:=s.UpdateData(5,100);err!=nil {
+	//	panic(err)
+	//}
+	//s.Print()
+	s.Print()
+	if err:=s.DeleteData(4);err!=nil {
 		panic(err)
 	}
 	s.Print()
+	fmt.Print(s)
 
 }
