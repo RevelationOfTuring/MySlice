@@ -113,13 +113,14 @@ func (s *Myslice) AppendData(value int) {
 	s.len++
 	return
 }
+
 //追加多个元素
 func (s *Myslice) AppendDatas(values ...int) {
 	if s == nil {
 		return
 	}
 	nValue := len(values)
-	if nValue==0{
+	if nValue == 0 {
 		return
 	}
 	var p unsafe.Pointer
@@ -133,11 +134,43 @@ func (s *Myslice) AppendDatas(values ...int) {
 			s.cap *= 2
 		}
 	}
-	pInt:=uintptr(p)+uintptr(s.len*TAG)
-	for i:=0;i<nValue;i++{
-		*(*int)(unsafe.Pointer(pInt))=values[i]
-		pInt+=TAG
+	pInt := uintptr(p) + uintptr(s.len*TAG)
+	for i := 0; i < nValue; i++ {
+		*(*int)(unsafe.Pointer(pInt)) = values[i]
+		pInt += TAG
 	}
-	s.len+=nValue
+	s.len += nValue
 	return
+}
+
+//插入元素
+func (s *Myslice) InsertData(index, value int) error {
+	if index == s.len {
+		s.AppendData(value)
+		return nil
+	}
+	if s == nil {
+		return errors.New("Myslice is empty")
+	}
+	//check the len
+	if index < 0 || index > s.len {
+		return errors.New("Index out of range")
+	}
+	//check the cap
+	if s.len == s.cap {
+		s.Data = C.realloc(s.Data, C.ulong(s.cap)*2)
+		s.cap *= 2
+	}
+
+	//insert
+	head := uintptr(s.Data)
+
+	var i uintptr
+	for i = head + uintptr((s.len+1)*TAG); i >= head+uintptr((index+1)*TAG); i -= TAG {
+		*(*int)(unsafe.Pointer(i)) = *(*int)(unsafe.Pointer(i - TAG))
+	}
+	*(*int)(unsafe.Pointer(i)) = value
+
+	s.len++
+	return nil
 }

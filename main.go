@@ -30,8 +30,15 @@ func main() {
 	//s.AppendData(999)
 	//s.Print()
 	//fmt.Println(s)
-	s.Create(1,99)
-	s.AppendDatas(2,3,4,5,6,7,8,9)
+	//s.Create(1,99)
+	//s.AppendDatas(2,3)
+	//s.Print()
+	//fmt.Println(s)
+	s.Create(4,1,2,3,4)
+	s.Print()
+	if err:=s.InsertData(0,99);err!=nil {
+		panic(err)
+	}
 	s.Print()
 	fmt.Println(s)
 
