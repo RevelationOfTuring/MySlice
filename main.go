@@ -34,12 +34,19 @@ func main() {
 	//s.AppendDatas(2,3)
 	//s.Print()
 	//fmt.Println(s)
-	s.Create(4,1,2,3,4)
-	s.Print()
-	if err:=s.InsertData(0,99);err!=nil {
+	//s.Create(4,1,2,3,4)
+	//s.Print()
+	//if err:=s.InsertData(0,99);err!=nil {
+	//	panic(err)
+	//}
+	//s.Print()
+	//fmt.Println(s)
+	s.Create(10,1,2,3,4,5,6,7,8,9,10)
+	n,err:=s.SearchData(10)
+	if err!=nil {
 		panic(err)
 	}
-	s.Print()
-	fmt.Println(s)
+	fmt.Println(n)
+
 
 }

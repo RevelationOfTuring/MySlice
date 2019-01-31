@@ -174,3 +174,18 @@ func (s *Myslice) InsertData(index, value int) error {
 	s.len++
 	return nil
 }
+
+//搜索元素
+func (s *Myslice) SearchData(value int)(int,error) {
+	if s==nil{
+		return 0,errors.New("Myslice is empty!")
+	}
+	p:=uintptr(s.Data)
+	for i:=0;i<s.len;i++{
+		if *(*int)(unsafe.Pointer(p))==value{
+			return i,nil
+		}
+		p+=TAG
+	}
+	return -1,nil
+}
